@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = require('path');
+
+function main(argv) {
+
+  var getArg = function() {
+    var args = argv.shift();
+    args = args.split('=');
+    if (args.length > 1) {
+      argv.unshit(args.slice(1).join('='));
+    }
+    return args[0];
+  };
+
+  var arg, indent, remains = [];
+
+  while (argv.length) {
+    arg = getArg();
+    switch(arg) {
+      case '-i':
+      case '--indent':
+        indent = parseInt(arg);
+        break;
+      case '-h':
+      case '--help':
+        helpMessage();
+        break;
+      default:
+        remains.push(arg);
+        break;
+    }
+  }
+  console.log();
+  if (!fs.existsSync('package.json')) {
+    console.log('  package.json does not exist');
+    console.log();
+    process.exit(1);
+  }
+  var pkg = require(path.resolve('package.json'));
+
+  var v = remains[2];
+  if (!v) {
+    console.log('  version: ' + pkg.version);
+  } else {
+    pkg.version = v;
+    fs.writeFileSync('package.json', JSON.stringify(pkg, null, indent || 2));
+    console.log('  change: ' + v);
+  }
+  console.log();
+}
+
+main(process.argv);
+
+function helpMessage() {
+  console.log();
+  var lines = [
+    '  Usage:',
+    '    vc [-i 2] [version]',
+    '',
+    '  Options:',
+    '    -i, --indent=<indent>   indent in package.json, default: 2',
+    '    -h, --help              display this message',
+    '',
+    '  Examples:',
+    '    $ vc',
+    '    $ vc 1.0.0',
+    '',
+  ];
+  console.log(lines.join('\n'));
+  process.exit();
+}

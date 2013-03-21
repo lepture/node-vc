@@ -1,0 +1,29 @@
+{
+  "name": "vc",
+  "description": "Change the version of a package.json.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/lepture/vc",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lepture/vc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lepture/vc/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/lepture/vc/blob/master/LICENSE-MIT"
+    }
+  ],
+  "bin": {
+    "vc": "bin/vc"
+  },
+  "keywords": [
+    "spmplugin"
+  ],
+  "scripts": {
+    "postinstall": "scripts/postinstall.js",
+    "uninstall": "scripts/uninstall.js"
+  }
+}
