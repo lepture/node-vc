@@ -12,7 +12,17 @@ Install vc with npm:
 
 ## Usage
 
-It is pretty easy:
+It is pretty easy.
+
+Get the help menu:
+
+    $ vc -h
+
+Show current version:
+
+    $ vc
+
+Set a new version:
 
     $ vc 1.0.0
 
