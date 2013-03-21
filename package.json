@@ -16,14 +16,11 @@
       "url": "https://github.com/lepture/vc/blob/master/LICENSE-MIT"
     }
   ],
+  "dependencies": {},
   "bin": {
     "vc": "bin/vc"
   },
   "keywords": [
-    "spmplugin"
-  ],
-  "scripts": {
-    "postinstall": "scripts/postinstall.js",
-    "uninstall": "scripts/uninstall.js"
-  }
+    "version", "package.json"
+  ]
 }
