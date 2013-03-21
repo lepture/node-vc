@@ -14,14 +14,18 @@ function main(argv) {
     return args[0];
   };
 
-  var arg, indent, remains = [];
+  var arg, indent, pkgfile, remains = [];
 
   while (argv.length) {
     arg = getArg();
     switch(arg) {
       case '-i':
       case '--indent':
-        indent = parseInt(arg);
+        indent = parseInt(argv.shift());
+        break;
+      case '-p':
+      case '--path':
+        pkgfile = argv.shift();
         break;
       case '-h':
       case '--help':
@@ -33,19 +37,20 @@ function main(argv) {
     }
   }
   console.log();
-  if (!fs.existsSync('package.json')) {
-    console.log('  package.json does not exist');
+  pkgfile = pkgfile || 'package.json';
+  if (!fs.existsSync(pkgfile)) {
+    console.log('  ' + pkgfile + ' does not exist');
     console.log();
     process.exit(1);
   }
-  var pkg = require(path.resolve('package.json'));
+  var pkg = require(path.resolve(pkgfile));
 
   var v = remains[2];
   if (!v) {
     console.log('  version: ' + pkg.version);
   } else {
     pkg.version = v;
-    fs.writeFileSync('package.json', JSON.stringify(pkg, null, indent || 2));
+    fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent || 2));
     console.log('  change: ' + v);
   }
   console.log();
@@ -61,11 +66,13 @@ function helpMessage() {
     '',
     '  Options:',
     '    -i, --indent=<indent>   indent in package.json, default: 2',
+    '    -p, --path=<pkgfile>    package.json path default: package.json',
     '    -h, --help              display this message',
     '',
     '  Examples:',
     '    $ vc',
     '    $ vc 1.0.0',
+    '    $ vc -p component.json 1.0.0',
     '',
   ];
   console.log(lines.join('\n'));

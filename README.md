@@ -28,6 +28,10 @@ Set a new version:
 
 ## Changelog
 
+**2013-03-21** `0.1.1`
+
+Add `-p` option.
+
 **2013-03-21** `0.1.0`
 
 First version.
