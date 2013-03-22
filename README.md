@@ -28,6 +28,10 @@ Set a new version:
 
 ## Changelog
 
+**2013-03-22** `0.1.2`
+
+New line at the end of package.json.
+
 **2013-03-21** `0.1.1`
 
 Add `-p` option.

@@ -50,7 +50,7 @@ function main(argv) {
     console.log('  version: ' + pkg.version);
   } else {
     pkg.version = v;
-    fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent || 2));
+    fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent || 2) + '\n');
     console.log('  change: ' + v);
   }
   console.log();
