@@ -14,11 +14,15 @@ function main(argv) {
     return args[0];
   };
 
-  var arg, indent, pkgfile, remains = [];
+  var arg, indent, pkgfile, remains = [], increase = false;
 
   while (argv.length) {
     arg = getArg();
     switch(arg) {
+      case '-c':
+      case '--increase':
+        increase = true;
+        break;
       case '-i':
       case '--indent':
         indent = parseInt(argv.shift());
@@ -46,7 +50,22 @@ function main(argv) {
   var pkg = require(path.resolve(pkgfile));
 
   var v = remains[2];
-  if (!v) {
+  if (increase == 1) {
+    var version = pkg.version;
+    var match = version.match(/(\d+)\.(\d+)\.(\d+)(.*)/);
+    if (match) {
+      var major = parseInt(match[1]);
+      var minor = parseInt(match[2]);
+      var patch = parseInt(match[3]);
+      var append = match[4];
+      pkg.version = major + "." + minor + "." + (patch + 1) + append;
+      fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent || 2) + '\n');
+      console.log('  change from: ' + version + ' to: ' + pkg.version);
+    } else {
+      console.log("version: " + version + " is invalid");
+      console.log();
+    }
+  } else if (!v) {
     console.log('  version: ' + pkg.version);
   } else {
     pkg.version = v;
@@ -67,6 +86,7 @@ function helpMessage() {
     '  Options:',
     '    -i, --indent=<indent>   indent in package.json, default: 2',
     '    -p, --path=<pkgfile>    package.json path default: package.json',
+    '    -c, --increase          increase a patch version',
     '    -h, --help              display this message',
     '',
     '  Examples:',
