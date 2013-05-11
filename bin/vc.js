@@ -50,7 +50,7 @@ function main(argv) {
   var pkg = require(path.resolve(pkgfile));
 
   var v = remains[2];
-  if (increase == 1) {
+  if (increase) {
     var version = pkg.version;
     var match = version.match(/(\d+)\.(\d+)\.(\d+)(.*)/);
     if (match) {
