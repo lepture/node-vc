@@ -58,11 +58,11 @@ function main(argv) {
       var minor = parseInt(match[2]);
       var patch = parseInt(match[3]);
       var append = match[4];
-      pkg.version = major + "." + minor + "." + (patch + 1) + append;
+      pkg.version = major + '.' + minor + '.' + (patch + 1) + append;
       fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent || 2) + '\n');
       console.log('  change from: ' + version + ' to: ' + pkg.version);
     } else {
-      console.log("version: " + version + " is invalid");
+      console.log('version: ' + version + ' is invalid');
       console.log();
     }
   } else if (!v) {
