@@ -62,7 +62,7 @@ function main(argv) {
       fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent || 2) + '\n');
       console.log('  change from: ' + version + ' to: ' + pkg.version);
     } else {
-      console.log('version: ' + version + ' is invalid');
+      console.log('  version: ' + version + ' is invalid');
       console.log();
     }
   } else if (!v) {
