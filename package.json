@@ -17,7 +17,7 @@
   ],
   "dependencies": {},
   "bin": {
-    "vc": "bin/vc.js"
+    "vc": "bin/vc"
   },
   "keywords": [
     "version",
