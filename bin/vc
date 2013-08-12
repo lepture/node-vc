@@ -43,11 +43,18 @@ function main(argv) {
   console.log();
   pkgfile = pkgfile || 'package.json';
   if (!fs.existsSync(pkgfile)) {
+    pkgfile = 'component.json';
+  }
+  if (!fs.existsSync(pkgfile)) {
     console.log('  ' + pkgfile + ' does not exist');
     console.log();
     process.exit(1);
   }
   var pkg = require(path.resolve(pkgfile));
+
+  if (!indent) {
+    indent = 2;
+  }
 
   var v = remains[2];
   if (increase) {
@@ -59,7 +66,7 @@ function main(argv) {
       var patch = parseInt(match[3]);
       var append = match[4];
       pkg.version = major + '.' + minor + '.' + (patch + 1) + append;
-      fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent || 2) + '\n');
+      fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent) + '\n');
       console.log('  change from: ' + version + ' to: ' + pkg.version);
     } else {
       console.log('  version: ' + version + ' is invalid');
@@ -69,7 +76,7 @@ function main(argv) {
     console.log('  version: ' + pkg.version);
   } else {
     pkg.version = v;
-    fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent || 2) + '\n');
+    fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, indent) + '\n');
     console.log('  change: ' + v);
   }
   console.log();
