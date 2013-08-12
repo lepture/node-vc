@@ -31,6 +31,11 @@ function main(argv) {
       case '--path':
         pkgfile = argv.shift();
         break;
+      case '-v':
+      case '-V':
+      case '--version':
+        printVersion();
+        break;
       case '-h':
       case '--help':
         helpMessage();
@@ -42,7 +47,7 @@ function main(argv) {
   }
   console.log();
   pkgfile = pkgfile || 'package.json';
-  if (!fs.existsSync(pkgfile)) {
+  if (pkgfile === 'package.json' && !fs.existsSync(pkgfile)) {
     pkgfile = 'component.json';
   }
   if (!fs.existsSync(pkgfile)) {
@@ -94,6 +99,7 @@ function helpMessage() {
     '    -i, --indent=<indent>   indent in package.json, default: 2',
     '    -p, --path=<pkgfile>    package.json path default: package.json',
     '    -c, --increase          increase a patch version',
+    '    -v, --version           print the version of vc',
     '    -h, --help              display this message',
     '',
     '  Examples:',
@@ -103,5 +109,11 @@ function helpMessage() {
     '',
   ];
   console.log(lines.join('\n'));
+  process.exit();
+}
+
+function printVersion() {
+  var pkg = require('../package');
+  console.log('vc@' + pkg.version);
   process.exit();
 }
