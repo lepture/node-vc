@@ -46,12 +46,15 @@ function main(argv) {
     }
   }
   console.log();
-  pkgfile = pkgfile || 'package.json';
-  if (pkgfile === 'package.json' && !fs.existsSync(pkgfile)) {
-    pkgfile = 'component.json';
-  }
-  if (!fs.existsSync(pkgfile)) {
-    console.log('  ' + pkgfile + ' does not exist');
+  var files = ['package.json', 'component.json', 'manifest.json'];
+  files.some(function(name) {
+    if (fs.existsSync(name)) {
+      pkgfile = name;
+      return true;
+    }
+  });
+  if (!pkgfile) {
+    console.log('  package.json does not exist');
     console.log();
     process.exit(1);
   }
