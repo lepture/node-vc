@@ -32,6 +32,10 @@ Increase the patch number by 1:
 
 ## Changelog
 
+**2013-09-12** `0.1.4`
+
+Add support for manifest.json.
+
 **2013-05-11** `0.1.3`
 
 Add `increase` option.
